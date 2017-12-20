@@ -1,4 +1,4 @@
-/* Author: lihang <lihanglucien@didichuxing.com>
+/* Author: lidaohang
  *
  * File: ngx_http_didi_add_header_module.c
  * Create Date: 2017-02-13 15:32:31
