@@ -1,5 +1,5 @@
 /*
- * Author: lihang <lihanglucien@didichuxing.com>
+ * Author: lidaohang 
  *
  * File: ngx_http_didi_add_header_handler.cpp
  * Create Date: 2016-10-13 12:03:15
