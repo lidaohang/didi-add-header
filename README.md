@@ -53,8 +53,6 @@ Context:    main, http, server, location, if in location
     didi_add_header  on; #开关
     didi_add_header_type variable; #变量类型
 
-    didi_smart_routing on;  #是否启用开关
-    didi_smart_routing_names b2b_test; #路由名称列表，支持多集群
 
     server {
         listen       80;
@@ -68,9 +66,6 @@ Context:    main, http, server, location, if in location
             set_by_lua $Cityid 'return 20001';
 
             didi_add_header_name Cityid;  #名称
-
-            #路由 {main_upstream_name}.{$lidc}_{port}
-            didi_smart_routing_upstream main_upstream_name=didi default_lidc=hna  default_port=80;
 
             proxy_pass http://$upstream_name;
         
