@@ -1,58 +1,58 @@
 /* Author: lidaohang
  *
- * File: ngx_http_didi_add_header_module.c
+ * File: ngx_http_lhlh_add_header_module.c
  * Create Date: 2017-02-13 15:32:31
  *
  */
 #include <ndk.h>
-#include "ngx_http_didi_add_header_handler.h"
+#include "ngx_http_lhlh_add_header_handler.h"
 
 static void
-ngx_http_didi_add_header_get_header(ngx_http_request_t *r);
+ngx_http_lhlh_add_header_get_header(ngx_http_request_t *r);
 
 static ngx_int_t
-ngx_http_didi_add_header_get_param(ngx_http_request_t *r);
+ngx_http_lhlh_add_header_get_param(ngx_http_request_t *r);
 
 static ngx_int_t
-ngx_http_didi_add_header_get_variable(ngx_http_request_t *r, ngx_str_t *value);
+ngx_http_lhlh_add_header_get_variable(ngx_http_request_t *r, ngx_str_t *value);
 
 static ngx_int_t
-ngx_http_didi_add_header_handler(ngx_http_request_t *r);
+ngx_http_lhlh_add_header_handler(ngx_http_request_t *r);
 
 static char*
-ngx_http_didi_add_header_name(ngx_conf_t *cf, ngx_command_t *cmd, void *conf);
+ngx_http_lhlh_add_header_name(ngx_conf_t *cf, ngx_command_t *cmd, void *conf);
 
 static char*
-ngx_http_didi_add_header_type(ngx_conf_t *cf, ngx_command_t *cmd, void *conf);
+ngx_http_lhlh_add_header_type(ngx_conf_t *cf, ngx_command_t *cmd, void *conf);
 
 static ngx_int_t
-ngx_http_didi_add_header_init(ngx_conf_t *cf);
+ngx_http_lhlh_add_header_init(ngx_conf_t *cf);
 
 static void *
-ngx_http_didi_add_header_create_loc_conf(ngx_conf_t *cf);
+ngx_http_lhlh_add_header_create_loc_conf(ngx_conf_t *cf);
 
 static char*
-ngx_http_didi_add_header_merge_loc_conf(ngx_conf_t *cf, void *parent, void *child);
+ngx_http_lhlh_add_header_merge_loc_conf(ngx_conf_t *cf, void *parent, void *child);
 
-static ngx_command_t  ngx_http_didi_add_header_commands[] = {
+static ngx_command_t  ngx_http_lhlh_add_header_commands[] = {
 
-    { ngx_string("didi_add_header"),
+    { ngx_string("lhlh_add_header"),
         NGX_HTTP_MAIN_CONF|NGX_HTTP_SRV_CONF|NGX_HTTP_LOC_CONF|NGX_CONF_FLAG,
         ngx_conf_set_flag_slot,
         NGX_HTTP_LOC_CONF_OFFSET,
-        offsetof(ngx_http_didi_add_header_conf_t, enable),
+        offsetof(ngx_http_lhlh_add_header_conf_t, enable),
         NULL },
 
-    { ngx_string("didi_add_header_type"),
+    { ngx_string("lhlh_add_header_type"),
         NGX_HTTP_MAIN_CONF|NGX_HTTP_SRV_CONF|NGX_HTTP_LOC_CONF|NGX_CONF_TAKE1,
-        ngx_http_didi_add_header_type,
+        ngx_http_lhlh_add_header_type,
         NGX_HTTP_LOC_CONF_OFFSET,
-        offsetof(ngx_http_didi_add_header_conf_t, header_type),
+        offsetof(ngx_http_lhlh_add_header_conf_t, header_type),
         NULL },
 
-    { ngx_string("didi_add_header_name"),
+    { ngx_string("lhlh_add_header_name"),
         NGX_HTTP_MAIN_CONF|NGX_HTTP_SRV_CONF|NGX_HTTP_SIF_CONF|NGX_HTTP_LOC_CONF|NGX_HTTP_LIF_CONF|NGX_CONF_TAKE12,
-        ngx_http_didi_add_header_name,
+        ngx_http_lhlh_add_header_name,
         NGX_HTTP_LOC_CONF_OFFSET,
         0,
         NULL },
@@ -61,9 +61,9 @@ static ngx_command_t  ngx_http_didi_add_header_commands[] = {
 };
 
 
-static ngx_http_module_t  ngx_http_didi_add_header_module_ctx = {
+static ngx_http_module_t  ngx_http_lhlh_add_header_module_ctx = {
     NULL,                                         /* preconfiguration */
-    ngx_http_didi_add_header_init,                /* postconfiguration */
+    ngx_http_lhlh_add_header_init,                /* postconfiguration */
 
     NULL,                                         /* create main configuration */
     NULL,                                         /* init main configuration */
@@ -71,15 +71,15 @@ static ngx_http_module_t  ngx_http_didi_add_header_module_ctx = {
     NULL,                                         /* create server configuration */
     NULL,                                         /* merge server configuration */
 
-    ngx_http_didi_add_header_create_loc_conf,     /* create location configration */
-    ngx_http_didi_add_header_merge_loc_conf       /* merge location configration */
+    ngx_http_lhlh_add_header_create_loc_conf,     /* create location configration */
+    ngx_http_lhlh_add_header_merge_loc_conf       /* merge location configration */
 };
 
 
-ngx_module_t  ngx_http_didi_add_header_module = {
+ngx_module_t  ngx_http_lhlh_add_header_module = {
     NGX_MODULE_V1,
-    &ngx_http_didi_add_header_module_ctx,         /* module context */
-    ngx_http_didi_add_header_commands,            /* module directives */
+    &ngx_http_lhlh_add_header_module_ctx,         /* module context */
+    ngx_http_lhlh_add_header_commands,            /* module directives */
     NGX_HTTP_MODULE,                              /* module type */
     NULL,                                         /* init master */
     NULL,                                         /* init module */
@@ -93,17 +93,17 @@ ngx_module_t  ngx_http_didi_add_header_module = {
 
 
 static ngx_int_t
-ngx_http_didi_add_header_set_header(ngx_http_request_t *r)
+ngx_http_lhlh_add_header_set_header(ngx_http_request_t *r)
 {
     uint32_t                                len;
     u_char                                  *data;
     ngx_table_elt_t                         *header;
     ngx_list_part_t                         *part;
     ngx_uint_t                              i;
-    ngx_http_didi_add_header_ctx_t          *ctx;
+    ngx_http_lhlh_add_header_ctx_t          *ctx;
 
 
-    ctx = ngx_http_get_module_ctx(r, ngx_http_didi_add_header_module);
+    ctx = ngx_http_get_module_ctx(r, ngx_http_lhlh_add_header_module);
     if ( ctx == NULL ) {
         return NGX_ERROR;
     }
@@ -112,8 +112,8 @@ ngx_http_didi_add_header_set_header(ngx_http_request_t *r)
         return NGX_OK;
     }
 
-    len = strlen(DIDI_ADD_HEADER_HEADER_HINT);
-    data = (u_char*)DIDI_ADD_HEADER_HEADER_HINT;
+    len = strlen(LHLH_ADD_HEADER_HEADER_HINT);
+    data = (u_char*)LHLH_ADD_HEADER_HEADER_HINT;
 
     part = &r->headers_in.headers.part;
     header = part->elts;
@@ -181,7 +181,7 @@ ngx_http_didi_add_header_set_header(ngx_http_request_t *r)
 
 
 static void
-ngx_http_didi_add_header_get_header(ngx_http_request_t *r)
+ngx_http_lhlh_add_header_get_header(ngx_http_request_t *r)
 {
     uint32_t                                len, hint_len;
     u_char                                  *data, *hint_data;
@@ -189,25 +189,25 @@ ngx_http_didi_add_header_get_header(ngx_http_request_t *r)
     ngx_uint_t                              i;
     ngx_table_elt_t                         *header;
     ngx_list_part_t                         *part;
-    ngx_http_didi_add_header_ctx_t          *ctx;
-    ngx_http_didi_add_header_conf_t         *lrcf;
+    ngx_http_lhlh_add_header_ctx_t          *ctx;
+    ngx_http_lhlh_add_header_conf_t         *lrcf;
 
 
-    lrcf = ngx_http_get_module_loc_conf(r, ngx_http_didi_add_header_module);
+    lrcf = ngx_http_get_module_loc_conf(r, ngx_http_lhlh_add_header_module);
     if ( lrcf == NULL  ) {
         return;
     }
 
-    ctx = ngx_http_get_module_ctx(r, ngx_http_didi_add_header_module);
+    ctx = ngx_http_get_module_ctx(r, ngx_http_lhlh_add_header_module);
     if ( ctx == NULL ) {
         return;
     }
 
-    len = strlen(DIDI_ADD_HEADER_TYPE_HEADER);
-    data = (u_char*)DIDI_ADD_HEADER_TYPE_HEADER;
+    len = strlen(LHLH_ADD_HEADER_TYPE_HEADER);
+    data = (u_char*)LHLH_ADD_HEADER_TYPE_HEADER;
 
-    hint_len = strlen(DIDI_ADD_HEADER_HEADER_HINT);
-    hint_data = (u_char*)DIDI_ADD_HEADER_HEADER_HINT;
+    hint_len = strlen(LHLH_ADD_HEADER_HEADER_HINT);
+    hint_data = (u_char*)LHLH_ADD_HEADER_HEADER_HINT;
 
     if (lrcf->header_type.len == len &&
               ngx_strncasecmp(lrcf->header_type.data, data,len) == 0 ) {
@@ -251,26 +251,26 @@ ngx_http_didi_add_header_get_header(ngx_http_request_t *r)
 
 
 static ngx_int_t
-ngx_http_didi_add_header_get_param(ngx_http_request_t *r)
+ngx_http_lhlh_add_header_get_param(ngx_http_request_t *r)
 {
     uint32_t                                    len;
     u_char                                      *data;
-    ngx_http_didi_add_header_ctx_t              *ctx;
-    ngx_http_didi_add_header_conf_t             *lrcf;
+    ngx_http_lhlh_add_header_ctx_t              *ctx;
+    ngx_http_lhlh_add_header_conf_t             *lrcf;
 
 
-    lrcf = ngx_http_get_module_loc_conf(r, ngx_http_didi_add_header_module);
+    lrcf = ngx_http_get_module_loc_conf(r, ngx_http_lhlh_add_header_module);
     if ( lrcf == NULL  ) {
         return NGX_ERROR;
     }
 
-    ctx = ngx_http_get_module_ctx(r, ngx_http_didi_add_header_module);
+    ctx = ngx_http_get_module_ctx(r, ngx_http_lhlh_add_header_module);
     if ( ctx == NULL ) {
         return NGX_ERROR;
     }
 
-    len = strlen(DIDI_ADD_HEADER_TYPE_PARAM);
-    data = (u_char*)DIDI_ADD_HEADER_TYPE_PARAM;
+    len = strlen(LHLH_ADD_HEADER_TYPE_PARAM);
+    data = (u_char*)LHLH_ADD_HEADER_TYPE_PARAM;
 
     if (lrcf->header_type.len == len &&
               ngx_strncasecmp(lrcf->header_type.data, data,len) == 0 ) {
@@ -283,26 +283,26 @@ ngx_http_didi_add_header_get_param(ngx_http_request_t *r)
 
 
 static ngx_int_t
-ngx_http_didi_add_header_get_variable(ngx_http_request_t *r, ngx_str_t *value)
+ngx_http_lhlh_add_header_get_variable(ngx_http_request_t *r, ngx_str_t *value)
 {
     uint32_t                                    len;
     u_char                                      *data;
-    ngx_http_didi_add_header_ctx_t              *ctx;
-    ngx_http_didi_add_header_conf_t             *lrcf;
+    ngx_http_lhlh_add_header_ctx_t              *ctx;
+    ngx_http_lhlh_add_header_conf_t             *lrcf;
 
 
-    lrcf = ngx_http_get_module_loc_conf(r, ngx_http_didi_add_header_module);
+    lrcf = ngx_http_get_module_loc_conf(r, ngx_http_lhlh_add_header_module);
     if ( lrcf == NULL  ) {
         return NGX_ERROR;
     }
 
-    ctx = ngx_http_get_module_ctx(r, ngx_http_didi_add_header_module);
+    ctx = ngx_http_get_module_ctx(r, ngx_http_lhlh_add_header_module);
     if ( ctx == NULL ) {
         return NGX_ERROR;
     }
 
-    len = strlen(DIDI_ADD_HEADER_TYPE_VARIABLE);
-    data = (u_char*)DIDI_ADD_HEADER_TYPE_VARIABLE;
+    len = strlen(LHLH_ADD_HEADER_TYPE_VARIABLE);
+    data = (u_char*)LHLH_ADD_HEADER_TYPE_VARIABLE;
 
     if (lrcf->header_type.len == len &&
               ngx_strncasecmp(lrcf->header_type.data, data,len) == 0 ) {
@@ -320,45 +320,45 @@ ngx_http_didi_add_header_get_variable(ngx_http_request_t *r, ngx_str_t *value)
 
 
 static ngx_int_t
-ngx_http_didi_add_header_handler(ngx_http_request_t *r)
+ngx_http_lhlh_add_header_handler(ngx_http_request_t *r)
 {
     ngx_int_t                               rc;
-    ngx_http_didi_add_header_ctx_t          *ctx;
-    ngx_http_didi_add_header_conf_t         *lrcf;
+    ngx_http_lhlh_add_header_ctx_t          *ctx;
+    ngx_http_lhlh_add_header_conf_t         *lrcf;
 
 
-    lrcf = ngx_http_get_module_loc_conf(r, ngx_http_didi_add_header_module);
+    lrcf = ngx_http_get_module_loc_conf(r, ngx_http_lhlh_add_header_module);
     if ( lrcf == NULL ) {
         return NGX_DECLINED;
     }
 
-    ctx = ngx_http_get_module_ctx(r, ngx_http_didi_add_header_module);
+    ctx = ngx_http_get_module_ctx(r, ngx_http_lhlh_add_header_module);
     if ( ctx == NULL ) {
-        ctx = ngx_pcalloc(r->pool, sizeof(ngx_http_didi_add_header_ctx_t));
+        ctx = ngx_pcalloc(r->pool, sizeof(ngx_http_lhlh_add_header_ctx_t));
         if ( ctx == NULL ) {
             return NGX_ERROR;
         }
 
-        ngx_http_set_ctx(r, ctx, ngx_http_didi_add_header_module);
+        ngx_http_set_ctx(r, ctx, ngx_http_lhlh_add_header_module);
     }
 
     if ( lrcf->enable == NGX_CONF_UNSET || lrcf->enable == 0 ) {
         return NGX_DECLINED;
     }
 
-    ngx_http_didi_add_header_get_header(r);
+    ngx_http_lhlh_add_header_get_header(r);
 
-    rc = ngx_http_didi_add_header_get_param(r);
+    rc = ngx_http_lhlh_add_header_get_param(r);
     if ( rc != NGX_OK ) {
          return NGX_DECLINED;
     }
 
-    rc = ngx_http_didi_add_header_request(r);
+    rc = ngx_http_lhlh_add_header_request(r);
     if ( rc != NGX_OK ) {
           return NGX_DECLINED;
     }
 
-    rc = ngx_http_didi_add_header_set_header(r);
+    rc = ngx_http_lhlh_add_header_set_header(r);
     if ( rc != NGX_OK ) {
           return NGX_DECLINED;
     }
@@ -368,7 +368,7 @@ ngx_http_didi_add_header_handler(ngx_http_request_t *r)
 
 
 static ngx_int_t
-ngx_http_didi_add_header_set_if_empty(ngx_http_request_t *r, ngx_str_t *res,
+ngx_http_lhlh_add_header_set_if_empty(ngx_http_request_t *r, ngx_str_t *res,
     ngx_http_variable_value_t *v)
 {
     ngx_int_t                           rc;
@@ -383,17 +383,17 @@ ngx_http_didi_add_header_set_if_empty(ngx_http_request_t *r, ngx_str_t *res,
         return NGX_OK;
     }
 
-    rc = ngx_http_didi_add_header_get_variable(r, res);
+    rc = ngx_http_lhlh_add_header_get_variable(r, res);
     if ( rc != NGX_OK ) {
          return NGX_OK;
     }
 
-    rc = ngx_http_didi_add_header_request(r);
+    rc = ngx_http_lhlh_add_header_request(r);
     if ( rc != NGX_OK ) {
          return NGX_OK;
     }
 
-    rc = ngx_http_didi_add_header_set_header(r);
+    rc = ngx_http_lhlh_add_header_set_header(r);
     if ( rc != NGX_OK ) {
           return NGX_OK;
     }
@@ -403,13 +403,13 @@ ngx_http_didi_add_header_set_if_empty(ngx_http_request_t *r, ngx_str_t *res,
 
 
 static char*
-ngx_http_didi_add_header_name(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
+ngx_http_lhlh_add_header_name(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
 {
     ngx_str_t                                               s;
     ndk_set_var_t                                           filter;
     ngx_uint_t                                              len;
     ngx_str_t                                               *value;
-    ngx_http_didi_add_header_conf_t                         *lrcf = conf;
+    ngx_http_lhlh_add_header_conf_t                         *lrcf = conf;
 
     len = cf->args->nelts;
     value = cf->args->elts;
@@ -461,7 +461,7 @@ ngx_http_didi_add_header_name(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
 
 
 static char*
-ngx_http_didi_add_header_type(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
+ngx_http_lhlh_add_header_type(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
 {
     ngx_http_didi_add_header_conf_t                         *lrcf = conf;
 
@@ -475,24 +475,24 @@ ngx_http_didi_add_header_type(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
         return NGX_CONF_ERROR;
     }
 
-    if (lrcf->header_type.len == strlen(DIDI_ADD_HEADER_TYPE_HEADER) &&
-              ngx_strncasecmp(lrcf->header_type.data, (u_char*)DIDI_ADD_HEADER_TYPE_HEADER,
-              strlen(DIDI_ADD_HEADER_TYPE_HEADER)) == 0 ) {
+    if (lrcf->header_type.len == strlen(LHLH_ADD_HEADER_TYPE_HEADER) &&
+              ngx_strncasecmp(lrcf->header_type.data, (u_char*)LHLH_ADD_HEADER_TYPE_HEADER,
+              strlen(LHLH_ADD_HEADER_TYPE_HEADER)) == 0 ) {
 
     }
-    else if (lrcf->header_type.len == strlen(DIDI_ADD_HEADER_TYPE_PARAM) &&
-              ngx_strncasecmp(lrcf->header_type.data, (u_char*)DIDI_ADD_HEADER_TYPE_PARAM,
-              strlen(DIDI_ADD_HEADER_TYPE_PARAM)) == 0 ) {
+    else if (lrcf->header_type.len == strlen(LHLH_ADD_HEADER_TYPE_PARAM) &&
+              ngx_strncasecmp(lrcf->header_type.data, (u_char*)LHLH_ADD_HEADER_TYPE_PARAM,
+              strlen(LHLH_ADD_HEADER_TYPE_PARAM)) == 0 ) {
 
     }
-    else if (lrcf->header_type.len == strlen(DIDI_ADD_HEADER_TYPE_VARIABLE) &&
-              ngx_strncasecmp(lrcf->header_type.data, (u_char*)DIDI_ADD_HEADER_TYPE_VARIABLE,
-              strlen(DIDI_ADD_HEADER_TYPE_VARIABLE)) == 0 ) {
+    else if (lrcf->header_type.len == strlen(LHLH_ADD_HEADER_TYPE_VARIABLE) &&
+              ngx_strncasecmp(lrcf->header_type.data, (u_char*)LHLH_ADD_HEADER_TYPE_VARIABLE,
+              strlen(LHLH_ADD_HEADER_TYPE_VARIABLE)) == 0 ) {
 
     }
     else {
         ngx_conf_log_error(NGX_LOG_EMERG, cf, 0,
-            "didi_add_header_type  parameter header|param|variable",
+            "lhlh_add_header_type  parameter header|param|variable",
             &cmd->name);
 
         return NGX_CONF_ERROR;
@@ -503,11 +503,11 @@ ngx_http_didi_add_header_type(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
 
 
 static void *
-ngx_http_didi_add_header_create_loc_conf(ngx_conf_t *cf)
+ngx_http_lhlh_add_header_create_loc_conf(ngx_conf_t *cf)
 {
-    ngx_http_didi_add_header_conf_t      *conf;
+    ngx_http_lhlh_add_header_conf_t      *conf;
 
-    conf = ngx_pcalloc(cf->pool, sizeof(ngx_http_didi_add_header_conf_t));
+    conf = ngx_pcalloc(cf->pool, sizeof(ngx_http_lhlh_add_header_conf_t));
     if (conf == NULL) {
         return NULL;
     }
@@ -523,10 +523,10 @@ ngx_http_didi_add_header_create_loc_conf(ngx_conf_t *cf)
 
 
 static char*
-ngx_http_didi_add_header_merge_loc_conf(ngx_conf_t *cf, void *parent, void *child)
+ngx_http_lhlh_add_header_merge_loc_conf(ngx_conf_t *cf, void *parent, void *child)
 {
-    ngx_http_didi_add_header_conf_t      *prev = parent;
-    ngx_http_didi_add_header_conf_t      *conf = child;
+    ngx_http_lhlh_add_header_conf_t      *prev = parent;
+    ngx_http_lhlh_add_header_conf_t      *conf = child;
 
     ngx_conf_merge_value(conf->enable, prev->enable, 0);
     ngx_conf_merge_str_value(conf->header_type, prev->header_type, "");
@@ -537,7 +537,7 @@ ngx_http_didi_add_header_merge_loc_conf(ngx_conf_t *cf, void *parent, void *chil
 
 
 static ngx_int_t
-ngx_http_didi_add_header_init(ngx_conf_t *cf)
+ngx_http_lhlh_add_header_init(ngx_conf_t *cf)
 {
     ngx_http_handler_pt                     *h;
     ngx_http_core_main_conf_t               *cmcf;
@@ -549,7 +549,7 @@ ngx_http_didi_add_header_init(ngx_conf_t *cf)
         return NGX_ERROR;
     }
 
-    *h = ngx_http_didi_add_header_handler;
+    *h = ngx_http_lhlh_add_header_handler;
 
     return NGX_OK;
 }
