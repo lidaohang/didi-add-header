@@ -439,7 +439,7 @@ ngx_http_lhlh_add_header_name(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
 
     if ( lrcf->header_name.len == 0 || lrcf->header_name.data == NULL ) {
         ngx_conf_log_error(NGX_LOG_EMERG, cf, 0,
-            "\"%V\" must have \"didi_add_header_name\" parameter",
+            "\"%V\" must have \"lhlh_add_header_name\" parameter",
             &cmd->name);
         return NGX_CONF_ERROR;
     }
