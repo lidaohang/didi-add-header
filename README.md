@@ -5,7 +5,7 @@
 
 #### 介绍
 
-根据配置动态从header头、url参数、变量获取值，插入到header头didi-header-hint-content中
+根据配置动态从header头、url参数、变量获取值，插入到header头lhlh-header-hint-content中
 
 
 ### 使用说明
@@ -15,12 +15,12 @@
 
 ```
 
-Syntax: didi_add_header on|off;
+Syntax: lhlh_add_header on|off;
 Default:    —
 Context:    main, http, server, location, if in location
 
 
-Syntax: didi_add_header_type header|param|variable;
+Syntax: lhlh_add_header_type header|param|variable;
 Default:    —
 Context:    main, http, server, location, if in location
 
@@ -29,7 +29,7 @@ Context:    main, http, server, location, if in location
 #variable:      获取变量名的值
 
 
-Syntax: didi_add_header_name name rename(可选);
+Syntax: lhlh_add_header_name name rename(可选);
 Default:    —
 Context:    main, http, server, location, if in location
 
@@ -42,16 +42,16 @@ Context:    main, http, server, location, if in location
 
 
 ```
-    upstream didi.hnq_80 {
+    upstream lhlh.hnq_80 {
         server 10.94.106.240:8011;
     }
 
-    upstream didi.hna_80 {
+    upstream lhlh.hna_80 {
         server 10.94.106.240:8012;
     }
 
-    didi_add_header  on; #开关
-    didi_add_header_type variable; #变量类型
+    lhlh_add_header  on; #开关
+    lhlh_add_header_type variable; #变量类型
 
 
     server {
@@ -65,7 +65,7 @@ Context:    main, http, server, location, if in location
             set $Cityid "456";
             set_by_lua $Cityid 'return 20001';
 
-            didi_add_header_name Cityid;  #名称
+            lhlh_add_header_name Cityid;  #名称
 
             proxy_pass http://$upstream_name;
         
@@ -80,11 +80,11 @@ Context:    main, http, server, location, if in location
 
  - 请求到nginx如下：
 ```
-curl 'http://127.0.0.1/mock/getinfo' -H 'Cityid: "1001"'  'didi-header-hint-content:{"k1": "v1"}' 
+curl 'http://127.0.0.1/mock/getinfo' -H 'Cityid: "1001"'  'lhlh-header-hint-content:{"k1": "v1"}' 
 ```
 
  - 转发到后端服务器
 
 ```
-curl 'http://127.0.0.1/mock/getinfo' -H 'didi-header-hint-content:{"k1":"v1","Cityid": "1001"}' 
+curl 'http://127.0.0.1/mock/getinfo' -H 'lhlh-header-hint-content:{"k1":"v1","Cityid": "1001"}' 
 ```
