@@ -36,7 +36,7 @@ ngx_http_lhlh_add_header_write_json_value(yajl_gen &g, yajl_val &value)
         for (int i = 0; i < len; i++) {
             const char *k = YAJL_GET_OBJECT(value)->keys[i];
             yajl_gen_string(g, (unsigned char *)k, strlen(k));
-            ngx_http_didi_add_header_write_json_value(g, YAJL_GET_OBJECT(value)->values[i]);
+            ngx_http_lhlh_add_header_write_json_value(g, YAJL_GET_OBJECT(value)->values[i]);
         }
 
         yajl_gen_map_close(g);
@@ -46,7 +46,7 @@ ngx_http_lhlh_add_header_write_json_value(yajl_gen &g, yajl_val &value)
 
         int len = YAJL_GET_ARRAY(value)->len;
         for (int i = 0; i < len; i++) {
-            ngx_http_didi_add_header_write_json_value(g, YAJL_GET_ARRAY(value)->values[i]);
+            ngx_http_lhlh_add_header_write_json_value(g, YAJL_GET_ARRAY(value)->values[i]);
         }
 
         yajl_gen_array_close(g);
