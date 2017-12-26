@@ -452,7 +452,7 @@ ngx_http_lhlh_add_header_name(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
     ngx_sprintf(s.data, "$%V", &lrcf->header_name);
 
     filter.type = NDK_SET_VAR_MULTI_VALUE;
-    filter.func = (void *) ngx_http_didi_add_header_set_if_empty;
+    filter.func = (void *) ngx_http_lhlh_add_header_set_if_empty;
     filter.size = 1;
     filter.data = NULL;
 
@@ -469,7 +469,7 @@ ngx_http_lhlh_add_header_type(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
 
     if ( lrcf->header_type.len == 0 || lrcf->header_type.data == NULL ) {
         ngx_conf_log_error(NGX_LOG_EMERG, cf, 0,
-            "\"%V\" must have \"didi_add_header_type\" parameter",
+            "\"%V\" must have \"lhlh_add_header_type\" parameter",
             &cmd->name);
 
         return NGX_CONF_ERROR;
