@@ -1,14 +1,14 @@
 /*
  * Author: lidaohang 
  *
- * File: ngx_http_didi_add_header_handler.cpp
+ * File: ngx_http_lhlh_add_header_handler.cpp
  * Create Date: 2016-10-13 12:03:15
  *
  */
-#include "ngx_http_didi_add_header_handler.h"
+#include "ngx_http_lhlh_add_header_handler.h"
 
 static void
-ngx_http_didi_add_header_write_json_value(yajl_gen &g, yajl_val &value)
+ngx_http_lhlh_add_header_write_json_value(yajl_gen &g, yajl_val &value)
 {
     if (YAJL_IS_STRING(value)) {
         const char *s = YAJL_GET_STRING(value);
@@ -55,23 +55,23 @@ ngx_http_didi_add_header_write_json_value(yajl_gen &g, yajl_val &value)
 
 
 ngx_int_t
-ngx_http_didi_add_header_request(ngx_http_request_t *r)
+ngx_http_lhlh_add_header_request(ngx_http_request_t *r)
 {
     size_t                                      i;
     size_t                                      len;
     yajl_gen                                    g;
     yajl_val                                    node;
     const unsigned char                         *buf;
-    ngx_http_didi_add_header_ctx_t              *ctx;
-    ngx_http_didi_add_header_conf_t             *lrcf;
+    ngx_http_lhlh_add_header_ctx_t              *ctx;
+    ngx_http_lhlh_add_header_conf_t             *lrcf;
 
 
-    lrcf = (ngx_http_didi_add_header_conf_t *)ngx_http_get_module_loc_conf(r, ngx_http_didi_add_header_module);
+    lrcf = (ngx_http_lhlh_add_header_conf_t *)ngx_http_get_module_loc_conf(r, ngx_http_lhlh_add_header_module);
     if ( lrcf == NULL ) {
         return NGX_ERROR;
     }
 
-    ctx = (ngx_http_didi_add_header_ctx_t*)ngx_http_get_module_ctx(r, ngx_http_didi_add_header_module);
+    ctx = (ngx_http_lhlh_add_header_ctx_t*)ngx_http_get_module_ctx(r, ngx_http_lhlh_add_header_module);
     if ( ctx == NULL ) {
         return NGX_ERROR;
     }
@@ -114,7 +114,7 @@ ngx_http_didi_add_header_request(ngx_http_request_t *r)
             }
 
             yajl_gen_string(g, (const unsigned char *)k, k_len);
-            ngx_http_didi_add_header_write_json_value(g, node->u.object.values[i]);
+            ngx_http_lhlh_add_header_write_json_value(g, node->u.object.values[i]);
         }
         yajl_tree_free(node);
 
