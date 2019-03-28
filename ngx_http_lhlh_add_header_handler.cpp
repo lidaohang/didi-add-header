@@ -93,7 +93,7 @@ ngx_http_lhlh_add_header_request(ngx_http_request_t *r)
     if ( ctx->hint.len > 0 && ctx->hint.data != NULL ) {
         //read json
         node = yajl_tree_parse((const char*)ctx->hint.data, NULL, 0);
-        if ( node == NULL ) {
+        if ( node == NULL || (!YAJL_IS_OBJECT(node))) {
             yajl_gen_free(g);
 
             ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
